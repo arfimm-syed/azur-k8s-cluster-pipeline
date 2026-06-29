@@ -1,4 +1,27 @@
 
+# trigger:
+# - main
+
+# pool:
+#   vmImage: ubuntu-latest
+
+# steps:
+
+# - script: echo "Azure K8s Terraform Pipeline"
+#   displayName: Start
+
+# - task: TerraformTask@5
+#   displayName: Terraform Init
+#   inputs:
+#     provider: 'azurerm'
+#     command: 'init'
+#     workingDirectory: '$(System.DefaultWorkingDirectory)/configuration/iaac/azure/kubernetes'
+#     backendServiceArm: 'Azure subscription 1(bb58363f-64e2-4c89-9fe0-18a66a90b86b)'
+#     backendAzureRmResourceGroupName: 'rg-ado-k8s-iaac-pipeline'
+#     backendAzureRmStorageAccountName: 'adok8siaacpipeline'
+#     backendAzureRmContainerName: 'tfstate'
+#     backendAzureRmKey: 'statefile.tfstate'
+
 trigger:
 - main
 
@@ -7,7 +30,7 @@ pool:
 
 steps:
 
-- script: echo "Azure K8s Terraform Pipeline"
+- script: echo "Terraform pipeline starting"
   displayName: Start
 
 - task: TerraformTask@5
@@ -16,6 +39,10 @@ steps:
     provider: 'azurerm'
     command: 'init'
     workingDirectory: '$(System.DefaultWorkingDirectory)/configuration/iaac/azure/kubernetes'
+
+    # 🔥 THIS IS THE FIX
+    terraformVersion: '1.6.6'
+
     backendServiceArm: 'Azure subscription 1(bb58363f-64e2-4c89-9fe0-18a66a90b86b)'
     backendAzureRmResourceGroupName: 'rg-ado-k8s-iaac-pipeline'
     backendAzureRmStorageAccountName: 'adok8siaacpipeline'
