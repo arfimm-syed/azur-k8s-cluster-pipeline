@@ -7,22 +7,15 @@ pool:
 
 steps:
 
-- task: TerraformInstaller@1
-  displayName: Install Terraform
-  inputs:
-    terraformVersion: '1.6.6'
-
-- script: terraform version
-  displayName: Verify Terraform Installation
-
-- script: echo "Azure K8s Terraform!"
-  displayName: Test
+- script: echo "Azure K8s Terraform Pipeline"
+  displayName: Start
 
 - task: TerraformTask@5
+  displayName: Terraform Init
   inputs:
     provider: 'azurerm'
     command: 'init'
-    workingDirectory: '$(System.DefaultWorkingDirectory)configuration/iaac/azure/kubernetes'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/configuration/iaac/azure/kubernetes'
     backendServiceArm: 'Azure subscription 1(bb58363f-64e2-4c89-9fe0-18a66a90b86b)'
     backendAzureRmResourceGroupName: 'rg-ado-k8s-iaac-pipeline'
     backendAzureRmStorageAccountName: 'adok8siaacpipeline'
